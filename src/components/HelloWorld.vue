@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="background">
     <v-layout text-center wrap>
       <v-flex xs12>
         <v-img
@@ -15,26 +15,16 @@
         <h1 class="display-1 font-weight-bold mb-3">
           Welcome to Monster Slayer Game
         </h1>
-        <!-- <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a href="https://community.vuetifyjs.com" target="_blank">Discord Community</a>
-        </p> -->
       </v-flex>
 
       <v-flex xs12>
-
-    <!-- <div class="d-inline mx-2 red white--text">d-inline</div>
-    <div class="d-inline pa-2 black white--text">d-inline</div> -->
-
-
-        <v-card class="d-flex align-content-center flex-wrap">
+        <v-card class="spacing row mx-12">
       <div class="small-6">
               <h1 class="text-center">Your Health</h1>
             <div class="healthbar">
                 <div
                         class="healthbar text-center"
-                        style="background-color: red; margin: 0; color: black; border-radius: 10px;"
+                        style="background-color: red; margin: 0; color: black; border-radius: 5px;"
                         :style="{width: playerHealth + '%'}">
                     {{ playerHealth }}
                 </div>
@@ -45,7 +35,7 @@
             <div class="healthbar">
                 <div
                         class="healthbar text-center"
-                        style="background-color: red; margin: 0; color: black; border-radius: 10px;"
+                        style="background-color: red; margin: 0; color: black; border-radius: 5px;"
                         :style="{width: monsterHealth + '%'}">
                     {{ monsterHealth }}
                 </div>
@@ -54,13 +44,13 @@
         </v-card>
 
 
-    <section class="row mx-12">
+    <v-card class="spacing row mx-12">
         <div class="small-6">
                 <h1 class="text-center">Energy</h1>
               <div class="healthbar">
                   <div
                           class="healthbar text-center"
-                          style="background-color: blue; margin: 0; color: black; border-radius: 10px;"
+                          style="background-color: blue; margin: 0; color: black; border-radius: 5px;"
                           :style="{width: playerEnergy + '%'}">
                       {{ playerEnergy }}
                   </div>
@@ -71,27 +61,63 @@
               <div class="healthbar">
                   <div
                           class="healthbar text-center"
-                          style="background-color: blue; margin: 0; color: black; border-radius: 10px;"
+                          style="background-color: blue; margin: 0; color: black; border-radius: 5px;"
                           :style="{width: monsterEnergy + '%'}">
                       {{ monsterEnergy }}
                   </div>
               </div>
           </div>
-      </section>
-    <section class="controls" v-if="!gameIsRunning">
+      </v-card>
+    <v-card class="controls" v-if="!gameIsRunning">
         <div class="small-12">
             <button id="start-game" @click="startGame">START NEW GAME</button>
         </div>
-    </section>
-    <section class="controls" v-else>
+    </v-card>
+    <v-card class="controls" v-else>
         <div class="small-12">
-            <button id="attack" @click="attack">ATTACK (-10 energy)</button>
-            <button id="special-attack" @click="specialAttack">SPECIAL ATTACK (-25 energy)</button>
-            <button id="heal" @click="heal">HEAL (-5 energy)</button>
-            <button id="addEnergy" @click="reChargeEnergy">Add 10 Energy</button>
-            <button id="give-up" @click="giveUp">GIVE UP</button>
+            <!-- <button id="attack" @click="attack">ATTACK (-10 energy)</button> -->
+            <!-- <button id="special-attack" @click="specialAttack">SPECIAL ATTACK (-25 energy)</button> -->
+            <!-- <button id="heal" @click="heal">HEAL (-5 energy)</button> -->
+            <!-- <button id="addEnergy" @click="reChargeEnergy">Add 10 Energy</button> -->
+            <!-- <button id="give-up" @click="giveUp">GIVE UP</button> -->
+
+            <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                    <v-btn dark v-on="on" id="attack" @click="attack">Attack</v-btn>
+                </template>
+                    <span class="tooltipColor">Energy -10</span>
+            </v-tooltip>
+
+            <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                    <v-btn dark v-on="on" id="special-attack" @click="specialAttack">SPECIAL ATTACK</v-btn>
+                </template>
+                    <span class="tooltipColor">Energy -25</span>
+            </v-tooltip>
+
+            <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                    <v-btn dark v-on="on" id="heal" @click="heal">HEAL</v-btn>
+                </template>
+                    <span class="tooltipColor">Energy -5</span>
+            </v-tooltip>
+
+            <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                    <v-btn dark v-on="on" id="addEnergy" @click="reChargeEnergy">Energy</v-btn>
+                </template>
+                    <span class="tooltipColor">Give yourself a break to increase +10 energy</span>
+            </v-tooltip>
+
+            <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                    <v-btn dark v-on="on" id="give-up" @click="giveUp">GIVE UP</v-btn>
+                </template>
+                    <span class="tooltipColor">Don't dare to think about it..</span>
+            </v-tooltip>
+
         </div>
-    </section>
+    </v-card>
     <section class="log" v-if="turns.length > 0">
         <div class="small-12">
             <ul>
@@ -264,34 +290,41 @@ methods: {
 </script>
 
 
-
-
-
-
 <style>
 
-.border {
-    border-radius: 15;
+.tooltipColor {
+    color: white;
+    font-size: 14px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.background {
+    background-color: grey;
+}
+
+.spacing {
+    padding-bottom: 15px;
 }
 
 .text-center {
     text-align: center;
+    margin: 0px;
 }
 
 .healthbar {
-    width: 80%;
-    height: 40px;
-    background-color: #eee;
+    width: 90%;
+    height: 35px;
+    background-color: rgb(41, 40, 40);
     margin: auto;
     transition: width 500ms;
+    border-width: 1px;
 }
 
 .controls, .log {
-    margin-top: 30px;
+    margin-top: 15px;
     text-align: center;
-    padding: 10px;
-    border: 1px solid #ccc;
-    box-shadow: 0px 3px 6px #ccc;
+    padding: 0px;
 }
 
 .turn {
@@ -322,23 +355,28 @@ methods: {
 }
 
 button {
+    transition: 0.5s;
     font-size: 20px;
-    background-color: #eee;
-    padding: 12px;
-    box-shadow: 0 1px 1px black;
+    background-color: rgb(44, 39, 39);
+    padding: 6px;
+    box-shadow: 0 2px 2px black;
     margin: 10px;
+    color: black;
 }
 
 #start-game {
-    background-color: #aaffb0;
+    background-color: rgb(245, 113, 113);
+    border-radius: 10px;
 }
 
 #start-game:hover {
-    background-color: #76ff7e;
+    background-color: red;
 }
 
 #attack {
     background-color: #ff7367;
+    border-radius: 10px;
+    color: black;
 }
 
 #attack:hover {
@@ -346,27 +384,45 @@ button {
 }
 
 #special-attack {
-    background-color: #ffaf4f;
+    background-color: rgb(246, 201, 117);
+    border-radius: 10px;
+    color: black;
 }
 
 #special-attack:hover {
-    background-color: #ff9a2b;
+    background-color: orange;
 }
 
 #heal {
     background-color: #aaffb0;
+    border-radius: 10px;
+    color: black;
 }
 
 #heal:hover {
     background-color: #76ff7e;
 }
 
+#addEnergy {
+    background-color: rgb(128, 128, 248);
+    border-radius: 10px;
+    color: black;
+}
+
+#addEnergy:hover {
+    background-color: blue;
+    border-radius: 10px;
+}
+
 #give-up {
     background-color: #ffffff;
+    border-radius: 10px;
+    color: black;
 }
 
 #give-up:hover {
-    background-color: #c7c7c7;
+    background-color: black;
+    color: white;
 }
 </style>
 
