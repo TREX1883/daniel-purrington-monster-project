@@ -46,7 +46,7 @@
 
     <v-card class="spacing row mx-12">
         <div class="small-6">
-                <h1 class="text-center">Energy</h1>
+                <h1 class="text-center">Your Energy</h1>
               <div class="healthbar">
                   <div
                           class="healthbar text-center"
@@ -57,7 +57,7 @@
               </div>
           </div>
           <div class="small-6">
-              <h1 class="text-center">Energy</h1>
+              <h1 class="text-center">Monster's Energy</h1>
               <div class="healthbar">
                   <div
                           class="healthbar text-center"
@@ -130,8 +130,39 @@
     </section>
       </v-flex>
     </v-layout>
+    <v-footer
+    dark
+    padless
+  >
+    <v-card
+      class="flex"
+      flat
+      tile
+    >
+      <v-card-title class="charcoal">
+        <strong class="subheading">Get connected with us on social networks!</strong>
+
+        <div class="flex-grow-1"></div>
+
+        <v-btn
+          v-for="icon in icons"
+          :key="icon"
+          class="mx-4"
+          dark
+          icon
+        >
+          <v-icon size="24px">{{ icon }}</v-icon>
+        </v-btn>
+      </v-card-title>
+
+      <v-card-actions class="grey justify-center">
+        {{ new Date().getFullYear() }} — <strong>MONSTER Inc.</strong>
+      </v-card-actions>
+    </v-card>
+  </v-footer>
   </v-container>
 </template>
+
 
 <script>
 import {
@@ -154,7 +185,14 @@ export default {
         playerEnergy: 100,
         monsterEnergy: 100,
         gameIsRunning: false,
-        turns: []
+        turns: [],
+        icons: [
+        'fab fa-facebook',
+        'fab fa-twitter',
+        'fab fa-google-plus',
+        'fab fa-linkedin',
+        'fab fa-instagram',
+      ],
     }),
 methods: {
         startGame: function () {
@@ -424,6 +462,7 @@ button {
     background-color: black;
     color: white;
 }
+
 </style>
 
 
